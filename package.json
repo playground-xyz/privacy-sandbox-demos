@@ -4,8 +4,9 @@
   "license": "apache-2.0",
   "description": "Privacy Sandbox Demos: Mixed demo of Privacy Sandbox APIs",
   "scripts": {
-    "start": "npm run docker",
+    "start": "npm run build:prebid && npm run docker",
     "cert": "cd nginx/cert && ./mkcert.sh",
+    "build:prebid": "cp ../Prebid.js/build/dist/prebid.js services/news/src/public/js/prebid.js",
     "build": "docker-compose build",
     "docker": "docker-compose build && docker-compose up",
     "deploy": "./scripts/cloudrun_deploy.sh && ./scripts/firebase_deploy.sh",

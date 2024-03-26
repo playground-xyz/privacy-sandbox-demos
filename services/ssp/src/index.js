@@ -229,7 +229,48 @@ app.get('/video-ad-tag.html', async (req, res) => {
 //   res.render("reports.html.ejs", { title: "Report", Reports })
 // })
 
-app.get('/auction-config.json', async (req, res) => {
+// Spoof contextual bid response from GG ad server with addition of FLEDGE signals
+app.get('/gumgum-prebid', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://privacy-sandbox-demos-news.dev');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  return res.json({
+    "ad": {
+        "id": 29593,
+        "width": 300,
+        "height": 250,
+        "ipd": 2000,
+        "markup": "<html><h3>Contextual / OpenRTB advertisement</h3></html>",
+        "ii": true,
+        "du": null,
+        "price": 0,
+        "zi": 0,
+        "impurl": "http://g2.gumgum.com/ad/view",
+        "clsurl": "http://g2.gumgum.com/ad/close"
+    },
+    "pag": {
+        "t": "ggumtest",
+        "pvid": "aa8bbb65-427f-4689-8cee-e3eed0b89eec",
+        "css": "html { overflow-y: auto }",
+        "js": "console.log(environment, env);"
+    },
+    "jcsi": {
+        "t": 0,
+        "rq": 8
+    },
+    "thms": 10000,
+    "meta": {
+        "adomain": [
+            "advertiser.com"
+        ],
+        "mediaType": "banner"
+    },
+    "paapi": {
+      "auctionConfig": auctionConfig()
+    }
+  });
+});
+
+const auctionConfig = () => {
   const DSP = new URL(`https://${DSP_HOST}:${EXTERNAL_PORT}`);
   const SSP = new URL(`https://${SSP_HOST}:${EXTERNAL_PORT}`);
   const auctionConfig = {
@@ -265,7 +306,11 @@ app.get('/auction-config.json', async (req, res) => {
     resolveToConfig: true,
   };
   console.log({auctionConfig});
-  res.json(auctionConfig);
+  return auctionConfig;
+};
+
+app.get('/auction-config.json', async (req, res) => {
+  return res.json(auctionConfig());
 });
 
 // app.post("/.well-known/attribution-reporting/debug/report-aggregate-attribution", async (req, res) => {

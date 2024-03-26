@@ -51,6 +51,32 @@ app.get('/', async (req: Request, res: Response) => {
     DSP_HOST,
   });
 });
+
+app.get('/prebid', async (req: Request, res: Response) => {
+  res.render('index-prebid', {
+    title: TITLE,
+    lorem: LOREM,
+    EXTERNAL_PORT,
+    HOME_HOST,
+    NEWS_TOKEN,
+    SSP_HOST,
+    DSP_HOST,
+  });
+});
+
+
+app.get('/fledge-example', async (req: Request, res: Response) => {
+  res.render('index-fledge-example', {
+    title: TITLE,
+    lorem: LOREM,
+    EXTERNAL_PORT,
+    HOME_HOST,
+    NEWS_TOKEN,
+    SSP_HOST,
+    DSP_HOST,
+  });
+});
+
 app.get('/video-ad', async (req: Request, res: Response) => {
   res.render('video-ad', {
     title: TITLE,
