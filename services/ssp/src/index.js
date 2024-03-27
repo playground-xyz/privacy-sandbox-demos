@@ -239,7 +239,7 @@ app.get('/gumgum-prebid', async (req, res) => {
         "width": 300,
         "height": 250,
         "ipd": 2000,
-        "markup": "<html><h3>Contextual / OpenRTB advertisement</h3></html>",
+        "markup": "<html><a target='_blank' href='https://gumgum.com'><img width=300 height=250 src='https://switchboard-software.com/wp-content/uploads/2023/05/JustPremium-GumGum.png'></a></html>",
         "ii": true,
         "du": null,
         "price": 0,

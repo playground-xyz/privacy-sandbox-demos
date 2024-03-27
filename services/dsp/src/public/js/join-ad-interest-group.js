@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', async (e) => {
   }
   const interestGroup = await getInterestGroupFromServer();
   console.log(`[DEMO] ${{interestGroup}}`);
-  const kSecsPerDay = 3600 * 24 * 30;
-  console.log(await navigator.joinAdInterestGroup(interestGroup, kSecsPerDay));
+  // const kSecsPerDay = 3600 * 24 * 30;
+  console.log(await navigator.joinAdInterestGroup(interestGroup, 10));
 
   // TODO: consider using Topics API for choosing Ads
   // const topics = await document.browsingTopics?.()
