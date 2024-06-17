@@ -1,23 +1,3 @@
-import {
-  DSP_A_HOST,
-  DSP_B_HOST,
-  DSP_HOST,
-  EXTERNAL_PORT,
-  PORT,
-  SHOP_DETAIL,
-  SHOP_HOST,
-} from './env.js';
-import {
-  addOrder,
-  displayCategory,
-  fromSize,
-  getItem,
-  getItems,
-  removeOrder,
-  updateOrder,
-} from './lib/items.js';
-
-import MemoryStoreFactory from 'memorystore';
 /*
  Copyright 2022 Google LLC
 
@@ -35,6 +15,9 @@ import MemoryStoreFactory from 'memorystore';
  */
 import express from 'express';
 import session from 'express-session';
+import MemoryStoreFactory from 'memorystore';
+import { DSP_HOST, DSP_A_HOST, DSP_B_HOST, EXTERNAL_PORT, PORT, SHOP_DETAIL, SHOP_HOST, } from './env.js';
+import { addOrder, displayCategory, fromSize, getItem, getItems, removeOrder, updateOrder, } from './lib/items.js';
 const app = express();
 app.set('trust proxy', 1); // required for Set-Cookie with Secure
 // Due to express >= 4 changes, we need to pass express-session to the
@@ -98,26 +81,20 @@ app.get('/ads/:id', async (req, res) => {
     res.redirect(301, imgPath);
 });
 app.get('/items/:id', async (req, res) => {
-  const {id} = req.params;
-  const item = await getItem(id);
-  const isMultiSeller = req.query.auctionType === 'multi';
-  const DSP_TAG_URL = new URL(
-    `https://${DSP_HOST}:${EXTERNAL_PORT}/dsp-tag.js`,
-  );
-  const DSP_A_TAG_URL = new URL(
-    `https://${DSP_A_HOST}:${EXTERNAL_PORT}/dsp-tag.js`,
-  );
-  const DSP_B_TAG_URL = new URL(
-    `https://${DSP_B_HOST}:${EXTERNAL_PORT}/dsp-tag.js`,
-  );
-  res.render('item', {
-    item,
-    DSP_TAG_URL,
-    DSP_A_TAG_URL,
-    DSP_B_TAG_URL,
-    SHOP_HOST,
-    isMultiSeller,
-  });
+    const { id } = req.params;
+    const item = await getItem(id);
+    const isMultiSeller = req.query.auctionType === 'multi';
+    const DSP_TAG_URL = new URL(`https://${DSP_HOST}:${EXTERNAL_PORT}/dsp-tag.js`);
+    const DSP_A_TAG_URL = new URL(`https://${DSP_A_HOST}:${EXTERNAL_PORT}/dsp-tag.js`);
+    const DSP_B_TAG_URL = new URL(`https://${DSP_B_HOST}:${EXTERNAL_PORT}/dsp-tag.js`);
+    res.render('item', {
+        item,
+        DSP_TAG_URL,
+        DSP_A_TAG_URL,
+        DSP_B_TAG_URL,
+        SHOP_HOST,
+        isMultiSeller,
+    });
 });
 app.post('/cart', async (req, res, next) => {
     const { id, size, quantity } = req.body;

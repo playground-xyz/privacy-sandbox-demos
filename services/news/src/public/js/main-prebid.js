@@ -72,7 +72,6 @@ async function initAdserver(bidResponses) {
         return;
     }
   } catch (error) {
-    t;
     console.error('Browser ad auction error', error);
   }
 
